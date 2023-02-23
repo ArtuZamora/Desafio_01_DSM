@@ -53,21 +53,25 @@ class EmployeeSalaryActivity: AppCompatActivity() {
         if (id == R.id.menu_1){
             Toast.makeText(this, "Menú principal", Toast.LENGTH_LONG).show()
             val intent = Intent(this, MainActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
         if (id == R.id.option_1) {
             Toast.makeText(this, "Cálculo de promedio de un estudiante", Toast.LENGTH_LONG).show()
             val intent = Intent(this, StudentGradesActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
         if (id == R.id.option_2) {
             Toast.makeText(this, "Salario neto de un empleado", Toast.LENGTH_LONG).show()
             val intent = Intent(this, EmployeeSalaryActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
         if (id == R.id.option_3) {
             Toast.makeText(this, "Calculadora básica", Toast.LENGTH_LONG).show()
             val intent = Intent(this, CalculatorActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
