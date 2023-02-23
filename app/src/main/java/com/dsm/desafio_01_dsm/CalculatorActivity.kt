@@ -2,11 +2,10 @@ package com.dsm.desafio_01_dsm
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
 class CalculatorActivity: AppCompatActivity() {
@@ -14,11 +13,44 @@ class CalculatorActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.calculator)
 
+        val num1Ipt = findViewById<EditText>(R.id.firstNumber_ipt)
+        val num2Ipt = findViewById<EditText>(R.id.secondNumber_ipt)
+        val processBtn = findViewById<Button>(R.id.calc_btn3)
+        val resultLbl = findViewById<TextView>(R.id.result_lbl3)
+
         /** Spinner fill with data */
         val spinner = findViewById<Spinner>(R.id.operation_spinner)
         val operations = arrayOf("Sumar", "Restar", "Multiplicar", "Dividir")
         val spinnerAdapter = ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, operations)
         spinner.adapter = spinnerAdapter
+
+        /** OnClick process operations */
+        processBtn.setOnClickListener{
+            val operation = spinner.getSelectedItem().toString()
+            Log.i("OPERATION",operation)
+            val n1 = num1Ipt.text.toString().toDoubleOrNull()
+            val n2 = num2Ipt.text.toString().toDoubleOrNull()
+            if(n1 != null && n2 != null){
+                var res: Double = 0.toDouble()
+                when(operation){
+                    "Sumar" -> {res = n1 + n2}
+                    "Restar" -> {res = n1 - n2}
+                    "Multiplicar" -> {res = n1 * n2}
+                    "Dividir" -> {
+                        if(n2 == 0.toDouble()){
+                            Toast.makeText(applicationContext, "No se puede dividir entre 0",
+                                Toast.LENGTH_LONG).show()
+                            return@setOnClickListener
+                        }
+                        res = n1 / n2
+                    }
+                }
+                resultLbl.setText(res.toString())
+            }
+            else
+                Toast.makeText(applicationContext, "Debe ingresar número válidos",
+                    Toast.LENGTH_LONG).show()
+        }
     }
 
     /** Menu creation and actions */
