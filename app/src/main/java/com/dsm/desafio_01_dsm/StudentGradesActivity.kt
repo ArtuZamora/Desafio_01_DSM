@@ -15,6 +15,7 @@ class StudentGradesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.student_grades)
+        setTitle("Calculo de promedio")
 
         val name = findViewById<EditText>(R.id.student_ipt)
         val grade_1 = findViewById<EditText>(R.id.grade1_ipt)
@@ -27,39 +28,23 @@ class StudentGradesActivity : AppCompatActivity() {
 
         processBtn.setOnClickListener{
             val student_name = name.text.toString()
-            val grade1 = grade_1.text.toString().toDoubleOrNull()
-            val grade2 = grade_2.text.toString().toDoubleOrNull()
-            val grade3 = grade_3.text.toString().toDoubleOrNull()
-            val grade4 = grade_4.text.toString().toDoubleOrNull()
-            val grade5 = grade_5.text.toString().toDoubleOrNull()
+            val grade1 = grade_1.text.toString()
+            val grade2 = grade_2.text.toString()
+            val grade3 = grade_3.text.toString()
+            val grade4 = grade_4.text.toString()
+            val grade5 = grade_5.text.toString()
 
-            val errors = ArrayList<String>()
-            if (student_name == null || student_name == ""){
-                errors.add("El nombre del estudiante es requerido.\n")
-            }
-            if (grade1 == null || grade1 < 0 || grade1 > 10){
-                errors.add("La nota 1 debe ser válida (número entre 0 y 10).\n")
-            }
-            if (grade2 == null || grade2 < 0 || grade2 > 10){
-                errors.add("La nota 2 debe ser válida (número entre 0 y 10).\n")
-            }
-            if (grade3 == null || grade3 < 0 || grade3 > 10){
-                errors.add("La nota 3 debe ser válida (número entre 0 y 10).\n")
-            }
-            if (grade4 == null || grade4 < 0 || grade4 > 10){
-                errors.add("La nota 4 debe ser válida (número entre 0 y 10).\n")
-            }
-            if (grade5 == null || grade5 < 0 || grade5 > 10){
-                errors.add("La nota 5 debe ser válida (número entre 0 y 10).\n")
-            }
+            val student = Student()
+            val setResultStatus =
+                student.setValues(
+                    student_name,
+                    arrayListOf<String>(grade1, grade2, grade3, grade4, grade5))
 
-            if(errors.isNotEmpty()){
-                result.setText(errors.joinToString("\n"))
+            if(!setResultStatus.success){
+                result.setText(setResultStatus.errors.joinToString("\n"))
                 return@setOnClickListener
             }
-            val prom = (grade1!! + grade2!! + grade3!! + grade4!! + grade5!!) / 5
-            val status = if(prom < 6) "Reprobado" else "Aprobado"
-            result.setText("Nombre del estudiante: ${student_name}\n Promedio: ${prom}\n El estudiante está: ${status}")
+            result.setText("Nombre del estudiante: ${student.name}\n Promedio: ${student.prom}\n El estudiante está: ${student.status}")
         }
     }
 

@@ -12,6 +12,7 @@ class CalculatorActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.calculator)
+        setTitle("Calculadora básica")
 
         val num1Ipt = findViewById<EditText>(R.id.firstNumber_ipt)
         val num2Ipt = findViewById<EditText>(R.id.secondNumber_ipt)
@@ -27,29 +28,15 @@ class CalculatorActivity: AppCompatActivity() {
         /** OnClick process operations */
         processBtn.setOnClickListener{
             val operation = spinner.getSelectedItem().toString()
-            Log.i("OPERATION",operation)
-            val n1 = num1Ipt.text.toString().toDoubleOrNull()
-            val n2 = num2Ipt.text.toString().toDoubleOrNull()
-            if(n1 != null && n2 != null){
-                var res: Double = 0.toDouble()
-                when(operation){
-                    "Sumar" -> {res = n1 + n2}
-                    "Restar" -> {res = n1 - n2}
-                    "Multiplicar" -> {res = n1 * n2}
-                    "Dividir" -> {
-                        if(n2 == 0.toDouble()){
-                            Toast.makeText(applicationContext, "No se puede dividir entre 0",
-                                Toast.LENGTH_LONG).show()
-                            return@setOnClickListener
-                        }
-                        res = n1 / n2
-                    }
-                }
-                resultLbl.setText(res.toString())
+            val n1 = num1Ipt.text.toString()
+            val n2 = num2Ipt.text.toString()
+            val calculation = Calculation()
+            val setResultStatus = calculation.operate(n1, n2, operation)
+            if(!setResultStatus.success){
+                resultLbl.setText(setResultStatus.errors.joinToString("\n"))
+                return@setOnClickListener
             }
-            else
-                Toast.makeText(applicationContext, "Debe ingresar número válidos",
-                    Toast.LENGTH_LONG).show()
+            resultLbl.setText(calculation.result.toString())
         }
     }
 

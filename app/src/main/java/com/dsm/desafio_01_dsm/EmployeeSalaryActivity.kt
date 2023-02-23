@@ -15,6 +15,8 @@ class EmployeeSalaryActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.employee_salary)
 
+        setTitle("Cálculo de salario neto")
+
         val name = findViewById<EditText>(R.id.employee_ipt)
         val salary = findViewById<EditText>(R.id.baseSalary_ipt)
         val processBtn = findViewById<Button>(R.id.calc_btn2)
@@ -22,31 +24,21 @@ class EmployeeSalaryActivity: AppCompatActivity() {
 
         processBtn.setOnClickListener {
             val name = name.text.toString()
-            val salary = salary.text.toString().toDoubleOrNull()
-            val errors = ArrayList<String>()
-            if (name == null || name == ""){
-                errors.add("El nombre del empleado es requerido.\n")
-            }
-            if (salary == null || salary < 0){
-                errors.add("Debe ingresar un salario base válido.\n")
-            }
-            if(errors.isNotEmpty()){
-                result.setText(errors.joinToString("\n"))
+            val salary = salary.text.toString()
+            val employee = Employee()
+            val setResultStatus = employee.setValues(name, salary)
+            if(!setResultStatus.success){
+                result.setText(setResultStatus.errors.joinToString("\n"))
                 return@setOnClickListener
             }
-            val isssDeduction = salary!! * (0.03)
-            val afpDeduction = salary!! * (0.04)
-            val rentDeduction = salary!! * (0.05)
-            val totalDeductions = isssDeduction + afpDeduction + rentDeduction
-            val netSalary = salary!! - totalDeductions
             val message = StringBuilder()
-            message.append("Nombre del empleado: ${name}\n")
-            message.append("Salario base: \$${salary}\n")
-            message.append("ISSS (-3%): \$${isssDeduction}\n")
-            message.append("AFP (-4%): \$${afpDeduction}\n")
-            message.append("Renta (-5%): \$${rentDeduction}\n")
-            message.append("Total de deducciones: \$${totalDeductions}\n")
-            message.append("Salario neto: \$${netSalary}\n")
+            message.append("Nombre del empleado: ${employee.name}\n")
+            message.append("Salario base: \$${employee.baseSalary}\n")
+            message.append("ISSS (-3%): \$${employee.isssDeduction}\n")
+            message.append("AFP (-4%): \$${employee.afpDeduction}\n")
+            message.append("Renta (-5%): \$${employee.rentDeduction}\n")
+            message.append("Total de deducciones: \$${employee.totalDeductions}\n")
+            message.append("Salario neto: \$${employee.netSalary}\n")
             result.setText(message.toString())
         }
     }
