@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Desafio 01 DSM - ZA190386</string>
+    <string name="main_message">Desafío Práctico DSM, seleccione porfavor una opción del menú ubicado en la barra de navegación superior.</string>
+    <string name="option_1">Promedio de estudiante</string>
+    <string name="option_2">Salario neto empleado</string>
+    <string name="option_3">Calculadora</string>
+    <string name="calculate">Calcular</string>
+    <string name="menu">Menú</string>
+
+    <!--    Option 1 strings    -->
+    <string name="name">Nombre del estudiante</string>
+    <string name="grade_1">Nota 1</string>
+    <string name="grade_2">Nota 2</string>
+    <string name="grade_3">Nota 3</string>
+    <string name="grade_4">Nota 4</string>
+    <string name="grade_5">Nota 5</string>
+    <string name="average">Promedio</string>
+
+    <!--    Option 2 strings    -->
+    <string name="employee_name">Nombre del empleado</string>
+    <string name="base_salary">Salario base</string>
+    <string name="net_salary">Salario neto</string>
+
+    <!--    Option 3 strings    -->
+    <string name="num_1">Primer número</string>
+    <string name="num_2">Segundo número</string>
+    <string name="operation">Operación</string>
+    <string name="result">Resultado</string>
+</resources>
+
+
+
+
+
+
+
+
+
+
